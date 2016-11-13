@@ -45,9 +45,22 @@ app.put('/lions/:id', function(req, res) {
   }
 });
 
+app.delete('/lions', function(req, res) {
+  var id = req.body.id;
+  if (!id || !lions[id]) { res.send({
+    success: false,
+    error: "No such id."
+  }) };
+
+  lions[id] = null;
+  delete lions[id];
+
+  res.send({success: true});
+});
+
+
 app.set('port', (process.env.PORT || 8080));
 
 app.listen(app.get('port'), function() {
  console.log("Node app is running at localhost:" + app.get('port'))
 });
-
